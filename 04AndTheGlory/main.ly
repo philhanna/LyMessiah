@@ -2,43 +2,48 @@
 
 #(ly:set-option 'midi-extension "mid")
 
-\header {
-  title = "Messiah"
-  subtitle = "4. And the Glory of the Lord"
-  composer = "G. F. Handel"
-  tagline = \markup {
-    Engraved at
-    \simple #(strftime "%Y-%m-%d" (localtime (current-time)))
-    with \with-url #"http://lilypond.org/"
-    \line { LilyPond \simple #(lilypond-version) (http://lilypond.org/) }
-  }
-}
-
-\paper {
-  #(set-paper-size "letter")
-  top-margin = 1\cm
-  left-margin = 2\cm
-  right-margin = 2\cm
-}
-
-tempoI = 144
-global = {
-  \key a \major
-  \time 3/4
-}
-
+\include "header.ly"
+\include "paper.ly"
+\include "globals.ly"
+\include "soprano.ly"
+\include "alto.ly"
+\include "tenor.ly"
+\include "bass.ly"
 \include "orch.ly"
 
 \score {
   \new GrandStaff <<
     \new ChoirStaff <<
+      
+      \new Staff \with { midiInstrument = "choir aahs" instrumentName = \markup \smallCaps Soprano}
+      \new Voice = "soprano" \soprano
+      \new Lyrics \lyricsto "soprano" \soplyrics
+      
+      \new Staff \with { midiInstrument = "choir aahs" instrumentName = \markup \smallCaps Alto}
+      \new Voice = "alto" \alto
+      \new Lyrics \lyricsto "alto" \altolyrics
+      
+      \new Staff \with { midiInstrument = "choir aahs" instrumentName = \markup \smallCaps Tenor}
+      \new Voice = "tenor" \tenor
+      \new Lyrics \lyricsto "tenor" \tenorlyrics
+      
+      \new Staff \with { midiInstrument = "choir aahs" instrumentName = \markup \smallCaps Bass}
+      \new Voice = "bass" \bass
+      \new Lyrics \lyricsto "bass" \basslyrics
     >>
-    \new PianoStaff <<
+    \new PianoStaff \with {
+      instrumentName = "Orchestra"
+    }
+    <<
       \new Staff \rh
       \new Staff \lh
     >>
   >>
   \layout {
+    \context {
+      \Staff
+      \RemoveAllEmptyStaves
+    }
   }
   \midi {
   }
