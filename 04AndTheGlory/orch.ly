@@ -1,25 +1,3 @@
-\version "2.22.1"
-
-#(ly:set-option 'midi-extension "mid")
-
-\header {
-  title = "Messiah"
-  subtitle = "4. And the Glory of the Lord"
-  composer = "G. F. Handel"
-  tagline = \markup {
-    Engraved at
-    \simple #(strftime "%Y-%m-%d" (localtime (current-time)))
-    with \with-url #"http://lilypond.org/"
-    \line { LilyPond \simple #(lilypond-version) (http://lilypond.org/) }
-  }
-}
-
-tempoI = 144
-global = {
-  \key a \major
-  \time 3/4
-}
-
 rh = \relative c' {
   \global
   \tempo Allegro 4=#tempoI
@@ -32,6 +10,13 @@ rh = \relative c' {
       <a a'>2 s4			| %4
       d4. fis8 e [d]		| %5
       cis4. e8 d [cis]		| %6
+      \break
+      b4 e2 ~			| %7
+      e4 d2 ~			| %8
+      d4. e8 cis4 ~		| %9
+      cis8 b b4. \trill a8	| %10
+      a2 \oneVoice r4 \voiceOne	| %11
+      
     }
     \new Voice \relative c' {
       \voiceTwo
@@ -41,6 +26,11 @@ rh = \relative c' {
       e4 cis <cis e>		| %4
       cis4 b2 ~			| %5
       b4 a a			| %6
+      gis4. b8 a [ gis ]		| %7
+      fis4. a8 gis [ fis ]	| %8
+      e4 gis a ~			| %9
+      a4 a gis			| %10
+      a2 s4			| %11
     }
   >>
 }
@@ -57,6 +47,11 @@ lh = \relative c {
       e2.			| %4
       fis4 e2			| %5
       e2.			| %6
+      e2.			| %7
+      cis4 d2			| %8
+      b2 a4			| %9
+      fis'4 e2 			| %10
+      cis2 \oneVoice r4 \voiceOne	| %11
     }
     \new Voice \relative c {
       \voiceTwo
@@ -66,28 +61,11 @@ lh = \relative c {
       cis4 a cis			| %4
       fis,4 gis e		| %5
       a4 a, cis			| %6
+      e2 cis'4			| %7
+      a4 fis b			| %8
+      gis4 e fis			| %9
+      d4 e e,			| %10
+      a2 s4			| %11
     }
   >>
-}
-
-\paper {
-  #(set-paper-size "letter")
-  top-margin = 1\cm
-  left-margin = 2\cm
-  right-margin = 2\cm
-}
-
-\score {
-  \new GrandStaff <<
-    \new ChoirStaff <<
-    >>
-    \new PianoStaff <<
-      \new Staff \rh
-      \new Staff \lh
-    >>
-  >>
-  \layout {
-  }
-  \midi {
-  }
 }
